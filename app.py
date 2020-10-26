@@ -23,7 +23,7 @@ def get_news(keyword, page):
 @app.route("/get-news-from-tags/<string:keyword>", methods=['GET'])
 def get_news_from_tags(keyword):
     try:
-        keywords = keyword.split(',').replace(' ', '')
+        keywords = keyword.split(',')
         data = get_tag_news(keywords)
         return dumps({'success': 'yes', 'news': data})
     except Exception as e:
@@ -38,7 +38,7 @@ def get_tag_news(keywords):
         # news = {
         #     key: get_news(key, "0")
         # }
-        tagArray.append(get_news(key, "0"))
+        tagArray.append(get_news(key.replace(' ', ''), "0"))
 
     print(tagArray)
     return tagArray

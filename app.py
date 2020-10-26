@@ -14,7 +14,7 @@ app = Flask(__name__)
 @app.route("/get-news/<string:keyword>/<string:page>", methods=['GET'])
 def get_news(keyword, page):
     try:
-        data = get_news(keyword, page)
+        data = get_news(keyword.replace(' ', ''), page)
         return dumps({'success': 'yes', 'news': data})
     except Exception as e:
         return dumps({'error': str(e)})
@@ -23,8 +23,7 @@ def get_news(keyword, page):
 @app.route("/get-news-from-tags/<string:keyword>", methods=['GET'])
 def get_news_from_tags(keyword):
     try:
-
-        keywords = keyword.split(',')
+        keywords = keyword.split(',').replace(' ', '')
         data = get_tag_news(keywords)
         return dumps({'success': 'yes', 'news': data})
     except Exception as e:
